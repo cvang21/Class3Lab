@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rectangle.controller;
+package calculator.controlller;
 
+import calculator.model.RectangleForm2Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -18,10 +19,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cvadmin
  */
-@WebServlet(name = "rectangleController", urlPatterns = {"/rectangleController"})
-public class rectangleController extends HttpServlet {
+@WebServlet(name = "RectangleForm2Controller", urlPatterns = {"/RectangleForm2Controller"})
+public class RectangleForm2Controller extends HttpServlet {
 
-    private static final String RESULT_PAGE = "calculatorForm.html";
+    private static final String RESULT_PAGE = "/rectangleForm2.jsp";
+
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,32 +39,15 @@ public class rectangleController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet rectangleController</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet rectangleController at " + request.getContextPath() + "</h1>");
-            
-            String length = request.getParameter("length");
-            String width = request.getParameter("width");
-            
-            int area = (Integer.parseInt(length)*Integer.parseInt(width));
-
-            request.setAttribute("area", area);
-        
-        // This object lets you forward both the request and response
-        // objects to a destination page
-//        RequestDispatcher view =
-//                request.getRequestDispatcher(RESULT_PAGE);
-//        view.forward(request, response);            
-            
-            out.println(area);
-            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet RectangleForm2Controller</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet RectangleForm2Controller at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-            
         }
     }
 
@@ -91,7 +77,24 @@ public class rectangleController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            RectangleForm2Model rectForm2 = new RectangleForm2Model();
+            
+        String width, height;
+        try
+        {
+            width = request.getParameter("width");
+            height = request.getParameter("height");
+            String result = rectForm2.calculateArea(width, height).toPlainString();
+            
+            request.setAttribute("result", result);
+            
+            RequestDispatcher view = request.getRequestDispatcher(RESULT_PAGE);
+            view.forward(request, response);
+        }
+        catch(Exception e)
+        {
+
+        }
     }
 
     /**

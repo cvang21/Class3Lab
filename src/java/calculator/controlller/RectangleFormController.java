@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package calculator.form.controlller;
+package calculator.controlller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +19,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author cvadmin
  */
 @WebServlet(name = "calculatorFormController", urlPatterns = {"/calculatorFormController"})
-public class calculatorFormController extends HttpServlet {
-   private static final String CALCULATOR_PAGE = "calculatorForm.html";
+public class RectangleFormController extends HttpServlet {
+   private static final String CALCULATOR_PAGE = "rectangleForm.jsp";
+   
+   
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,9 +35,16 @@ public class calculatorFormController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+            String length = request.getParameter("length");
+            String width = request.getParameter("width");
+            String circumference = request.getParameter("circumference");
+            String base = request.getParameter("base");
+            String height = request.getParameter("height");
+            
+            RectangleFormController cfc = new RectangleFormController();
+            
+            response.setContentType("text/html;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
 
             RequestDispatcher view = request.getRequestDispatcher(CALCULATOR_PAGE);
 	    view.forward(request, response);
